@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 异常处理器
@@ -22,6 +25,8 @@ public class MailExceptionHandler {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
+    List<String> contentList = new ArrayList<>();
+
     @Autowired
     MailService mailService;
 
@@ -31,6 +36,15 @@ public class MailExceptionHandler {
         if(null != e){
             logger.info("发送错误报告..");
             String content = getStackTrace(e);
+            for (String s : contentList) {
+                if(s.equals(content)){
+                    return;
+                }
+            }
+            if(contentList.size() > 10){
+                contentList.remove(contentList.size()-1);
+            }
+            contentList.add(content);
             mailService.sendTemplateMail(e.getMessage() == null ? "错误信息" : e.getMessage(), content,"错误报告");
             logger.error(e.getMessage(), e);
         }
