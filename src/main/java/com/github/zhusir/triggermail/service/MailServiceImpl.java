@@ -42,6 +42,7 @@ public class MailServiceImpl implements MailService {
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("content",content);
             model.put("title", title);
+            configuration.setClassForTemplateLoading(MailServiceImpl.class, "/templates");
             Template template = configuration.getTemplate("mail.ftl");
             String text = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
             List<String> toMails = mailMessage.getRecipient();
