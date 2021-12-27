@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 简单邮件
+ * Package email message
  */
 public class MailMessage {
 
@@ -22,6 +22,11 @@ public class MailMessage {
      * 邮件接收人
      */
     private List<String> recipient;
+
+    /**
+     * 重复邮件数
+     */
+    private Integer number = 20;
 
     public MailMessage from(String from){
         this.from = from;
@@ -61,5 +66,13 @@ public class MailMessage {
 
     public void setFromAlias(String fromAlias) {
         this.fromAlias = fromAlias;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }
